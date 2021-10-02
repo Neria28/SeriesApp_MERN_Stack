@@ -1,4 +1,5 @@
 const Series = require("../Schemas/seriesModel");
+const Subs = require("../Schemas/subscriptionsModel")
 
 exports.getAllSeries = function () {
   return new Promise((resolve, reject) => {
@@ -42,7 +43,21 @@ exports.addSeries = function (obj) {
 exports.deleteSeries = function (id) {
   return new Promise((resolve, reject) => {
     Series.findByIdAndDelete(id, function (err) {
-      err ? reject(err) : resolve("The series has been deleted");
+      if(err){
+        reject(err);
+      }else{
+        Subs.deleteMany({
+          'series_id' : {
+            $in : [id]
+          }, function(err ,result){
+            if(err){
+              reject(err)
+            }else{
+              resolve("series deleted")
+            }
+          }
+        })
+      }
     });
   });
 };

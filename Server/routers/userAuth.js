@@ -9,15 +9,16 @@ router.route("/login").post(async function (req, res, next) {
     .exec()
     .then((user) => {
       if (user.length < 1) {
-        return res.status(401).json({
-          message: "User not found",
-        });
+        return res.json({
+          message: "User not found"
+        })
+        
       }
       //check if pwd is incorrect
       if (req.body.pwd !== user[0].pwd) {
-        return res.status(401).json({
-          message: "Invalid password",
-        });
+        return res.json({
+          message: "Invalid password"
+        })
         //Check if pwd is correct
       }
       if (req.body.pwd == user[0].pwd) {
@@ -29,17 +30,18 @@ router.route("/login").post(async function (req, res, next) {
           JWT_KEY
         );
         return res.status(200).json({
+          loginSuccess: true,
           user : user[0],
           token : token
         })
       }
-      return res.status(401).json({
-        message: "Auth failed",
-      });
+      return res.json({
+        message: "Auth Faild"
+      })
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     });
 });
 module.exports = router;

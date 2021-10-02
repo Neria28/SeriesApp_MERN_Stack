@@ -1,4 +1,13 @@
 const Subs = require('../Schemas/subscriptionsModel')
+const Members = require('../Schemas/membersModel')
+
+exports.getSubscribers = function(){
+    return new Promise((resolve , rejects)=>{
+       Subs.find({} , function(err,data){
+           err? reject(err) : resolve(data)
+       })
+    });
+}
 
 
 exports.newSubscriotion = function(obj){
@@ -13,3 +22,4 @@ exports.newSubscriotion = function(obj){
         })
     });
 }
+
