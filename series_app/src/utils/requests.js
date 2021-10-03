@@ -12,8 +12,12 @@ const post = (url, obj) => {
   return axios.post(url, obj);
 };
 
+const putItem = (url, obj) => {
+  return axios.put(url +"/"+ obj._id , obj)
+}
+
 const deleteItem = (url, id) => {
-  return axios.delete(url , id);
+  return axios.delete(`${url}/${id}`);
 };
 
-export default { getAll, getItem, post, deleteItem };
+export default { getAll, getItem, post , putItem, deleteItem };

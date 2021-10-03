@@ -1,9 +1,17 @@
 const Series = require("../Schemas/seriesModel");
-const Subs = require("../Schemas/subscriptionsModel")
+const Subs = require("../Schemas/subscriptionsModel");
 
 exports.getAllSeries = function () {
   return new Promise((resolve, reject) => {
     Series.find({}, function (err, data) {
+      err ? reject(err) : resolve(data);
+    });
+  });
+};
+
+exports.getSeries = function (id) {
+  return new Promise((resolve, reject) => {
+    Series.findById(id, function (err, data) {
       err ? reject(err) : resolve(data);
     });
   });
@@ -42,21 +50,13 @@ exports.addSeries = function (obj) {
 
 exports.deleteSeries = function (id) {
   return new Promise((resolve, reject) => {
-    Series.findByIdAndDelete(id, function (err) {
-      if(err){
+    Series.findByIdAndDelete(id, function (err, data) {
+      if (err) {
         reject(err);
-      }else{
-        Subs.deleteMany({
-          'series_id' : {
-            $in : [id]
-          }, function(err ,result){
-            if(err){
-              reject(err)
-            }else{
-              resolve("series deleted")
-            }
-          }
-        })
+      } else {
+        Subs.deleteMany({ seriesId: id }, (error) => {
+          error ? reject(error) : resolve("Series has ben deleted");
+        });
       }
     });
   });

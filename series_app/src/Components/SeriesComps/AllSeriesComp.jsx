@@ -1,7 +1,7 @@
 import "./allSeries.css";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {useRouteMatch } from "react-router";
+import { useRouteMatch } from "react-router";
 import requests from "../../utils/requests";
 import { Link } from "react-router-dom";
 export default function AllSerieComp() {
@@ -25,20 +25,15 @@ export default function AllSerieComp() {
       return date.toLocaleString("he-il", options);
     }
   };
-  const removeSeire = async (serie) => {
-    // let resp = await requests.deleteItem(
-    //   "http://localhost:8080/api/series/" + serie._id
-    // );
-    dispatch({ type: "DEL_SERIE", payload: serie });
-  };
   const getSeries = async (searchInp) => {
     let resp = await requests.getAll("http://localhost:8080/api/series");
-    console.log("the searchInp" , searchInp);
+    console.log("the searchInp", searchInp);
     if (searchInp === "") {
       dispatch({ type: "SET_SERIES", payload: resp.data });
-    }
-    else if(searchInp !== "") {
-      let searchedSeries = resp.data.filter((serie) => serie.name.toLowerCase().includes(searchInp));
+    } else if (searchInp !== "") {
+      let searchedSeries = resp.data.filter((serie) =>
+      serie.name.toLowerCase().includes(searchInp)
+      );
       console.log(searchedSeries);
       dispatch({ type: "SET_SERIES", payload: searchedSeries });
     }
@@ -49,15 +44,24 @@ export default function AllSerieComp() {
   };
   const getMembers = async () => {
     let resp = await requests.getAll("http://localhost:8080/api/members");
+    
     dispatch({ type: "GET_MEMBERS", payload: resp.data });
   };
-
-  useEffect(() => { 
-    getSeries(searchInp);
-  },[searchInp]);
+  
+  const removeSeire = async (serieId) => {
+    let resp = await requests.deleteItem(
+      "http://localhost:8080/api/series" + serieId
+      );
+      alert(resp.data)
+    dispatch({ type: "DEL_SERIE", payload: series});
+  };
   
   useEffect(() => {
-    getSeries('');
+    getSeries(searchInp);
+  }, [searchInp]);
+
+  useEffect(() => {
+    getSeries("");
     getMembers();
     getSubscribers();
   }, []);
@@ -106,8 +110,9 @@ export default function AllSerieComp() {
                 <Link to={`${url}/editserie/${serie._id}`}>
                   <button>Edit</button>
                 </Link>
-
-                <button type="button">Remove</button>
+                <button type="button" onCLick={() => removeSeire(serie._id)}>
+                  Remove
+                </button>
               </div>
             </div>
           );

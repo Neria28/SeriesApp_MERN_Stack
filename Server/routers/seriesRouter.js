@@ -7,6 +7,11 @@ router.route("/").get(async function (req, res) {
   return res.json(await seriesBL.getAllSeries());
 });
 
+router.route("/:id").get(async function (req, res) {
+  let id = req.params.id
+  return res.json(await seriesBL.getSeries(id));
+});
+
 router.route("/:id").put(async function (req, res) {
   let id = req.params.id;
   let obj = req.body;
