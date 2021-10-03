@@ -3,17 +3,20 @@ import { useRouteMatch } from "react-router";
 import EditSerieComp from "./EditSerieComp";
 import AllSeriesComp from "./AllSeriesComp";
 import AddSerieComp from "./AddSerieComp";
+import requests from "../../utils/requests";
+
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SeriesComp() {
   const dispatch = useDispatch()
-  const [searchInp , setSearchInp] = useState("")
+  const [searchInp, setSearchInp] = useState("")
   const { path, url } = useRouteMatch();
-  
-  const sendToRedux = () => {
+
+  const search =()=> {
     dispatch({type : "SET_SEARCH_INP" , payload : searchInp})
   }
+ 
 
   return (
     <div style={{ border: "8px solid #000", height: "auto" }}>
@@ -21,7 +24,7 @@ export default function SeriesComp() {
       <div>
         <div>
           <Link to={`${url}`}>
-            <button>Add Series</button>
+            <button>ALL Series</button>
           </Link>
           <Link to={`${url}/addserie`}>
             <button>Add Series</button>
@@ -33,7 +36,7 @@ export default function SeriesComp() {
             placeholder="Search Movie"
             onChange={(e) => setSearchInp(e.target.value)}
           />
-          <button onClick={() => sendToRedux()}>Seacrh</button>
+          <input type="button" value="Search" onClick={() => search()}/>
         </div>
       </div>
       <Switch>

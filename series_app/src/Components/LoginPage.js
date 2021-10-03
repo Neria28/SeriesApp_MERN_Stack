@@ -26,7 +26,7 @@ export default function LoginPageComp() {
     <div>
       <h1>Welcome to Series App</h1>
       <form onSubmit={(e) => getUser(e)}>
-        <h3>Plese Login</h3>
+        <h3>Please Login</h3>
         <input
           type="text"
           placeholder="user name"

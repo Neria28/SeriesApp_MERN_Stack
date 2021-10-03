@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import {
   useRouteMatch,
-  useHistory,
   Switch,
   Route,
   Link,
@@ -15,9 +14,15 @@ export default function SeriesMainComp(props) {
   useEffect(() => {
     setUserName(sessionStorage.getItem("userName"));
   }, []);
+  
   return (
     <div>
-      <h1>Wellcome to NerFlix</h1>
+      <h2>Wellcome to</h2>
+      <h1 style={{ backgroundColor: 'white', width: "120px", 
+      margin: "0 auto" ,
+      borderRadius :'4px',
+      border : '4px solid red' ,
+      color : 'red'}}>NerFlix</h1>
       <div>Hello {userName}</div>
       <div>
         <Link to={`${url}`}>

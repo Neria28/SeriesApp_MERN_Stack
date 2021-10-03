@@ -7,13 +7,12 @@ import { Link } from "react-router-dom";
 export default function AllSerieComp() {
   const dispatch = useDispatch();
   const { path, url } = useRouteMatch();
-  const searchInp = useSelector((state) => state.searchInp);
-  let series = useSelector((state) => [...state.series]);
+  const searchInp = useSelector((state) => state.searchInp)
+  const series = useSelector((state) => [...state.series]);
   const members = useSelector((state) => [...state.members]);
-  const [subscribers, setSubscribers] = useState([]);
+  const subscription = useSelector((state) => [...state.subscription]);
 
   const formatDate = (date, type) => {
-    date = new Date();
     let options = {
       year: "numeric",
       month: "2-digit",
@@ -25,6 +24,15 @@ export default function AllSerieComp() {
       return date.toLocaleString("he-il", options);
     }
   };
+
+  const removeSeire = async (serie) => {
+    let resp = await requests.deleteItem(
+      "http://localhost:8080/api/series", serie._id
+    );
+    alert(resp.data)
+    dispatch({ type: "DEL_SERIE", payload: serie });
+  };
+
   const getSeries = async (searchInp) => {
     let resp = await requests.getAll("http://localhost:8080/api/series");
     console.log("the searchInp", searchInp);
@@ -32,42 +40,34 @@ export default function AllSerieComp() {
       dispatch({ type: "SET_SERIES", payload: resp.data });
     } else if (searchInp !== "") {
       let searchedSeries = resp.data.filter((serie) =>
-      serie.name.toLowerCase().includes(searchInp)
+        serie.name.toLowerCase().includes(searchInp)
       );
-      console.log(searchedSeries);
       dispatch({ type: "SET_SERIES", payload: searchedSeries });
     }
   };
-  const getSubscribers = async () => {
+
+  const getSubscription = async () => {
     let resp = await requests.getAll("http://localhost:8080/api/subs");
-    setSubscribers(resp.data);
+    dispatch({ type: "GET_SUBSCRIPTIONS", payload: resp.data });
+
   };
   const getMembers = async () => {
     let resp = await requests.getAll("http://localhost:8080/api/members");
-    
     dispatch({ type: "GET_MEMBERS", payload: resp.data });
   };
-  
-  const removeSeire = async (serieId) => {
-    let resp = await requests.deleteItem(
-      "http://localhost:8080/api/series" + serieId
-      );
-      alert(resp.data)
-    dispatch({ type: "DEL_SERIE", payload: series});
-  };
-  
-  useEffect(() => {
-    getSeries(searchInp);
-  }, [searchInp]);
 
   useEffect(() => {
-    getSeries("");
     getMembers();
-    getSubscribers();
+    getSubscription();
   }, []);
 
+  useEffect(() => {
+    getSeries(searchInp);
+  }, [searchInp])
+
+
   return (
-    <div style={{ border: "3px solid green" }}>
+    <div>
       <div className="seriesContainer">
         {series.map((serie) => {
           return (
@@ -87,7 +87,7 @@ export default function AllSerieComp() {
               <div className="subscriptions">
                 <span>Subscriptions Watched</span>
                 <ul>
-                  {subscribers.map((sub) => {
+                  {subscription.map((sub) => {
                     if (sub.seriesId === serie._id) {
                       for (const member of members) {
                         if (member._id === sub.memberId) {
@@ -110,9 +110,7 @@ export default function AllSerieComp() {
                 <Link to={`${url}/editserie/${serie._id}`}>
                   <button>Edit</button>
                 </Link>
-                <button type="button" onCLick={() => removeSeire(serie._id)}>
-                  Remove
-                </button>
+                <input type="button" value="Remove" onClick={() => removeSeire(serie)} />
               </div>
             </div>
           );

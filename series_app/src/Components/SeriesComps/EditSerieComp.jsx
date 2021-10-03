@@ -1,17 +1,23 @@
-import { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useEffect, useState ,useRef } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory, useParams  } from "react-router";
 import { Link } from "react-router-dom";
 import requests from "../../utils/requests";
 export default function EditSerieComp() {
   const params = useParams();
   const [serie, setSerie] = useState({});
+  const dispatch = useDispatch()
   const history = useHistory()
+
+  const serieNameRef = useRef(null)
+
   const getSerie = async () => {
     let resp = await requests.getItem(
       "http://localhost:8080/api/series",
       params.serieid
     );
     setSerie(resp.data);
+    serieNameRef.current = serie.name
   };
 
   const putGenres = (genres) => {
@@ -31,7 +37,7 @@ export default function EditSerieComp() {
 
   return (
     <div>
-      <h3>Edit Serie</h3>
+      <h3>Edit Serie : {serieNameRef.current}</h3>
       <form>
         <label>Name </label>
         <input

@@ -43,7 +43,7 @@ exports.addSeries = function (obj) {
       img: obj.img,
     });
     series.save(function (err, data) {
-      err ? reject(err) : resolve(data);
+      err ? reject(err) : resolve({text : "Serie has been added" , serie : series});
     });
   });
 };

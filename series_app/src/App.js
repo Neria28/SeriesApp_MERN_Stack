@@ -5,7 +5,7 @@ import SeriesMainComp from "./Components/SeriesComps/SeriesMainComp.jsx";
 
 function App() {
   return (
-    <div className="App" style={{border: '3px solid red'}}>
+    <div className="App">
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={LoginPageComp} />
