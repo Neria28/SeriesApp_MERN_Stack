@@ -28,8 +28,14 @@ export default function appReducer(
         return{...state}
 
       case "UPDATE_SERIE": 
-      let updatedSerie = state.series.findIndex(x => x._id === action.payload._id)
-      state.series.splice(updatedSerie, 1, action.payload)
+      console.log(action.payload.id)
+      let updatedSerie = state.series.findIndex(x => x._id === action.payload.id)
+      console.log(updatedSerie)
+      state.series[updatedSerie] = {...state.series[updatedSerie] , 
+        name: action.payload.Serie.name,
+        genres: action.payload.Serie.genres,
+        premiered: action.payload.Serie.premiered,
+      }
       return {...state}
     //members
     case "GET_MEMBERS":

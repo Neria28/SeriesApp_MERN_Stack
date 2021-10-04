@@ -28,7 +28,7 @@ exports.updateSeries = function (id, obj) {
         img: obj.img,
       },
       function (err) {
-        err ? reject(err) : resolve("The series has been updated");
+        err ? reject(err) : resolve({text : "The series has been updated" , serie : obj});
       }
     );
   });
@@ -42,7 +42,7 @@ exports.addSeries = function (obj) {
       genres: obj.genres,
       img: obj.img,
     });
-    series.save(function (err, data) {
+    series.save(function (err) {
       err ? reject(err) : resolve({text : "Serie has been added" , serie : series});
     });
   });

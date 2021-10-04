@@ -33,38 +33,6 @@ export default function AllSerieComp() {
     dispatch({ type: "DEL_SERIE", payload: serie });
   };
 
-  const getSeries = async (searchInp) => {
-    let resp = await requests.getAll("http://localhost:8080/api/series");
-    console.log("the searchInp", searchInp);
-    if (searchInp === "") {
-      dispatch({ type: "SET_SERIES", payload: resp.data });
-    } else if (searchInp !== "") {
-      let searchedSeries = resp.data.filter((serie) =>
-        serie.name.toLowerCase().includes(searchInp)
-      );
-      dispatch({ type: "SET_SERIES", payload: searchedSeries });
-    }
-  };
-
-  const getSubscription = async () => {
-    let resp = await requests.getAll("http://localhost:8080/api/subs");
-    dispatch({ type: "GET_SUBSCRIPTIONS", payload: resp.data });
-
-  };
-  const getMembers = async () => {
-    let resp = await requests.getAll("http://localhost:8080/api/members");
-    dispatch({ type: "GET_MEMBERS", payload: resp.data });
-  };
-
-  useEffect(() => {
-    getMembers();
-    getSubscription();
-  }, []);
-
-  useEffect(() => {
-    getSeries(searchInp);
-  }, [searchInp])
-
 
   return (
     <div>
@@ -73,7 +41,7 @@ export default function AllSerieComp() {
           return (
             <div key={serie._id} className="serie">
               <h4>
-                {serie.name} , {formatDate(serie.premiered, "year")}
+                {serie.name} <br/>{serie.premiered.slice(0 ,4)}
               </h4>
               <br />
               <img alt={serie.name + "img"} src={serie.img} />

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import requests from "../../utils/requests";
 export default function EditSerieComp() {
   const params = useParams();
-  const [serie, setSerie] = useState({});
+  const [serie, setSerie] = useState({_id: params.id , name : "" , genres:[] , premiered : ""});
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -25,9 +25,10 @@ export default function EditSerieComp() {
     setSerie({ ...serie, genres: genresToPush });
   };
 
-  const saveSerie = async () => {
+  const updateSerie = async () => {
     let resp = await requests.putItem("http://localhost:8080/api/series",serie);
-    alert(resp.data);
+    alert(resp.data.text);
+    dispatch({type : "UPDATE_SERIE" , payload : {id : params.serieid , Serie : resp.data.serie}})
     history.push('/home');
   };
 
@@ -67,7 +68,7 @@ export default function EditSerieComp() {
           onChange={(e) => setSerie({ ...serie, img: e.target.value })}
         />
       </form>
-      <input type="button" value="Save" onClick={() => saveSerie()} />
+      <input type="button" value="Save" onClick={() => updateSerie()} />
       <Link to="/home">
         <input type="button" value="Cancel" />
       </Link>
