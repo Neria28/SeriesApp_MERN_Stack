@@ -7,10 +7,11 @@ import requests from "../../utils/requests";
 
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import AddMemberComp from "../MembersComp/AddMemberComp";
 
 export default function SeriesComp() {
-  const dispatch = useDispatch()
-  const [searchInp, setSearchInp] = useState("")
+  const dispatch = useDispatch();
+  const [searchInp, setSearchInp] = useState("");
   const { path, url } = useRouteMatch();
 
   const getSeries = async (searchInp) => {
@@ -29,7 +30,6 @@ export default function SeriesComp() {
   const getSubscription = async () => {
     let resp = await requests.getAll("http://localhost:8080/api/subs");
     dispatch({ type: "GET_SUBSCRIPTIONS", payload: resp.data });
-
   };
   const getMembers = async () => {
     let resp = await requests.getAll("http://localhost:8080/api/members");
@@ -43,17 +43,15 @@ export default function SeriesComp() {
 
   useEffect(() => {
     getSeries(searchInp);
-  }, [searchInp])
-
+  }, [searchInp]);
 
   // const search =()=> {
   //   dispatch({type : "SET_SEARCH_INP" , payload : searchInp})
   // }
- 
 
   return (
     <div style={{ border: "8px solid #000", height: "auto" }}>
-      <h3>Series</h3>
+      <h1 style={{ lineHeight: "1px" }}>Series</h1>
       <div>
         <div>
           <Link to={`${url}`}>
@@ -73,7 +71,8 @@ export default function SeriesComp() {
         </div>
       </div>
       <Switch>
-        <Route path={`${path}/editserie/:serieid`} component={EditSerieComp} />
+        <Route exact path={`${path}/sunscribers/addmember`} component={AddMemberComp} />
+        <Route exact path={`sunscribers/editserie/:serieid`} component={EditSerieComp} />
         <Route path={`${path}/addserie`} component={AddSerieComp} />
         <Route path={path} component={AllSeriesComp} />
       </Switch>

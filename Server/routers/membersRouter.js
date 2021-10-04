@@ -23,4 +23,9 @@ router.route("/").post(async function (req, res) {
   return res.json(await membersBL.addMember(obj));
 });
 
+router.route("/:id").delete(async function (req, res) {
+  let id = req.params.id;
+  return res.json(await membersBL.deleteMember(id));
+});
+
 module.exports = router;

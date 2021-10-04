@@ -11,6 +11,37 @@ body{
   pointer-events: none;
 }
 
+.mainConianer{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+
+}
+img{
+  border-radius: 8px;
+  width: 180px;
+  height: 250px;
+}
+
+.contet{
+  background-color: #921f1f;
+  color: white;
+  border: 3px solid #000;
+  border-radius: 8px;
+  width: 250px;
+  height: auto;
+}
+
+.innerGrid{
+  background-color:grey;
+  border: 2px solid #000;
+  border-radius: 8px;
+  width: auto;
+  height: auto;
+
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

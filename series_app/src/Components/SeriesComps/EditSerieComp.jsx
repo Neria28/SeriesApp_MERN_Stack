@@ -38,7 +38,7 @@ export default function EditSerieComp() {
 
   return (
     <div>
-      <h3>Edit Serie : {serieNameRef.current}</h3>
+      <h3 >Edit Serie : {serieNameRef.current}</h3>
       <form>
         <label>Name </label>
         <input

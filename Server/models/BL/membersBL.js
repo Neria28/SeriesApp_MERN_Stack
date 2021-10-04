@@ -1,5 +1,5 @@
 const Members = require('../Schemas/membersModel')
-
+const Subs = require("../Schemas/subscriptionsModel");
 
 exports.getAllMembers = function(){
     return new Promise((resolve , rejcet)=>{
@@ -26,7 +26,7 @@ exports.updateMember  = function(id , obj){
             email : obj.email,
             city: obj.city,
         }, function(err){
-            err?reject(err) : resolve("Member has been updated")
+            err?reject(err) : resolve({text : "Member has been updated" , member : obj})
         })
     })
 }
@@ -44,4 +44,17 @@ exports.addMember = function(obj){
     })
 }
 
+exports.deleteMember = function (id) {
+    return new Promise((resolve, reject) => {
+        Members.findByIdAndDelete(id, function (err, data) {
+        if (err) {
+          reject(err);
+        } else {
+          Subs.deleteMany({ memberId: id }, (error) => {
+            error ? reject(error) : resolve("Member deleted");
+          });
+        }
+      });
+    });
+  };
 

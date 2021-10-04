@@ -1,5 +1,4 @@
 const Subs = require('../Schemas/subscriptionsModel')
-const Members = require('../Schemas/membersModel')
 
 exports.getSubscribers = function(){
     return new Promise((resolve , rejects)=>{
@@ -15,10 +14,10 @@ exports.newSubscriotion = function(obj){
         let sub = new Subs({
             seriesId : obj.seriesId,
             memberId : obj.memberId,
-            date : obj,memberId,
+            date : obj.date,
         });
         sub.save(function(err , data){
-            err?rejects(err) : resolve(data)
+            err?rejects(err) : resolve({text : "sub created" , sub : data})
         })
     });
 }

@@ -14,7 +14,7 @@ export default function AddSerieComp() {
   });
 
   const putGenres = (genres) => {
-    const genresToPush = genres.split(" , " || " . " || "," || " ");
+    const genresToPush = genres.split(" , " || "," || " . " || "." || " ");
     setNewSerie({ ...newSerie, genres: genresToPush });
   };
 
