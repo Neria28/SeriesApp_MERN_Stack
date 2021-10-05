@@ -1,6 +1,5 @@
 const express = require("express");
 const Users = require("../models/Schemas/usersModel");
-const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -22,18 +21,10 @@ router.route("/login").post(async function (req, res, next) {
         //Check if pwd is correct
       }
       if (req.body.pwd == user[0].pwd) {
-        const JWT_KEY = "UsErTokEnEria"
-        const token = jwt.sign(
-          {
-            userId: user[0]._id,
-          },
-          JWT_KEY
-        );
         return res.status(200).json({
           loginSuccess: true,
-          user : user[0],
-          token : token
-        })
+          user : user[0]
+                })
       }
       return res.json({
         message: "Auth Faild"

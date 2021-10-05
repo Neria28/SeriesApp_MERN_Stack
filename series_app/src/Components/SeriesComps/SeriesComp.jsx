@@ -14,11 +14,9 @@ export default function SeriesComp() {
   const dispatch = useDispatch();
   const [searchInp, setSearchInp] = useState("");
   const { path, url } = useRouteMatch();
-  console.log("path" , path)
 
   const getSeries = async (searchInp) => {
     let resp = await requests.getAll("http://localhost:8080/api/series");
-    console.log("the searchInp", searchInp);
     if (searchInp === "") {
       dispatch({ type: "SET_SERIES", payload: resp.data });
     } else if (searchInp !== "") {
