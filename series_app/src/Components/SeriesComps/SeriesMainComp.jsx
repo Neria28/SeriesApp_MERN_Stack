@@ -42,10 +42,10 @@ export default function SeriesMainComp(props) {
         <br />
       </div>
       <Switch>
-        <Route path={`${path}/addmember`} component={AddMemberComp} />
         <Route path={`${path}/subscribers/:memberId`} component={EditMemberComp}/>
-        <Route exact path={`${path}/subscribers`} component={MembersMainComp} />
+        <Route path={`${path}/subscribers`} component={MembersMainComp} />
         <Route path={`${path}`} component={SeriesComp} />
+        <Route path={`${path}/subscribers/addmember`} component={AddMemberComp}/>
       </Switch>
     </div>
   );

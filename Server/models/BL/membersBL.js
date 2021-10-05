@@ -39,7 +39,7 @@ exports.addMember = function(obj){
             city : obj.city
         });
         member.save(function(err , data){
-            err? reject(err) : resolve(data)
+            err? reject(err) : resolve({text: "member creates" , member : data})
         })
     })
 }

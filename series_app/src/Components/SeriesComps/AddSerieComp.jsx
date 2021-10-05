@@ -28,6 +28,7 @@ export default function AddSerieComp() {
 
   return (
     <div>
+      <h3>Add Series</h3>
       <form>
         <label>Name </label>
         <input
@@ -56,7 +57,7 @@ export default function AddSerieComp() {
         <input
           type="button"
           value="Cancel"
-          onClick={() => history.push("/home")}
+          onClick={() => history.goBack()}
         />
       </form>
     </div>

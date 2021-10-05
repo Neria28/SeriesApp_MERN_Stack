@@ -8,11 +8,13 @@ import requests from "../../utils/requests";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import AddMemberComp from "../MembersComp/AddMemberComp";
+import SerieComp from "./SerieComp";
 
 export default function SeriesComp() {
   const dispatch = useDispatch();
   const [searchInp, setSearchInp] = useState("");
   const { path, url } = useRouteMatch();
+  console.log("path" , path)
 
   const getSeries = async (searchInp) => {
     let resp = await requests.getAll("http://localhost:8080/api/series");
@@ -50,7 +52,7 @@ export default function SeriesComp() {
   // }
 
   return (
-    <div style={{ border: "8px solid #000", height: "auto" }}>
+    <div >
       <h1 style={{ lineHeight: "1px" }}>Series</h1>
       <div>
         <div>
@@ -71,8 +73,9 @@ export default function SeriesComp() {
         </div>
       </div>
       <Switch>
-        <Route exact path={`${path}/sunscribers/addmember`} component={AddMemberComp} />
-        <Route exact path={`sunscribers/editserie/:serieid`} component={EditSerieComp} />
+        <Route path={`${path}/addmember`} component={AddMemberComp} />
+        <Route path={`${path}/serie/:serieid`} component={SerieComp} />
+        <Route path={`${path}/editserie/:serieid`} component={EditSerieComp} />
         <Route path={`${path}/addserie`} component={AddSerieComp} />
         <Route path={path} component={AllSeriesComp} />
       </Switch>

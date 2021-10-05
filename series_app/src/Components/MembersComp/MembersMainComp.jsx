@@ -24,7 +24,7 @@ export default function MemberMainComp() {
         <Link to={`${url}`}>
           <button>ALL Members</button>
         </Link>
-        <Link to={`${url}/addmember`}>
+        <Link to={`addmember`}>
           <button>Add Member</button>
         </Link>
       </div>

@@ -56,6 +56,10 @@ export default function appReducer(
         city: action.payload.member.city,
       };
       return { ...state };
+      case "ADD_MEMBER":
+      state.members.push(action.payload);
+      console.log("members after add", state.members);
+      return { ...state };
 
     case "DEL_MEMBER":
       console.log(action.payload)

@@ -111,7 +111,7 @@ export default function MemberComp({ member }) {
                 if (serie._id === sub.seriesId) {
                   return (
                     <li key={sub._id}>
-                      <Link to={`editserie/${serie._id}`}>{serie.name}</Link> ,{" "}
+                      <Link to={`serie/${serie._id}`}>{serie.name}</Link> ,{" "}
                       {formatDate(sub.date)}
                     </li>
                   );
